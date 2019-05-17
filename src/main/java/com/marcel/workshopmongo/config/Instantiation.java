@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.marcel.workshopmongo.domain.Post;
 import com.marcel.workshopmongo.domain.User;
 import com.marcel.workshopmongo.dto.AuthorDTO;
+import com.marcel.workshopmongo.dto.CommentDTO;
 import com.marcel.workshopmongo.repository.PostRepository;
 import com.marcel.workshopmongo.repository.UserRepository;
 
@@ -39,7 +40,14 @@ public class Instantiation implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(marcel, duda, brenda));
 		
 		Post post1 = new Post(null, sdf.parse("15/04/2019"), "Canada", "Estou me mudando pro Canada, tchau!", new AuthorDTO(marcel));
-		Post post2 = new Post(null, sdf.parse("16/04/2019"), "Cheguei!", "Chegamos bem, graças a Deus.", new AuthorDTO(marcel));
+		Post post2 = new Post(null, sdf.parse("16/04/2019"), "Cheguei!", "Cheguei bem, graças a Deus.", new AuthorDTO(marcel));
+		
+		CommentDTO c1 = new CommentDTO("Boa sorte papai. Te amo!", sdf.parse("15/04/2019"), new AuthorDTO(duda));
+		CommentDTO c2 = new CommentDTO("Boa viagem. Chego já!", sdf.parse("15/04/2019"), new AuthorDTO(brenda));
+		CommentDTO c3 = new CommentDTO("Graças a Deus. Vá dando notícias.", sdf.parse("16/04/2019"), new AuthorDTO(brenda));
+		
+		post1.getCommentDTO().addAll(Arrays.asList(c1, c2));
+		post2.getCommentDTO().addAll(Arrays.asList(c3));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2)); 
 		
